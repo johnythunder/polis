@@ -124,6 +124,51 @@
   ::-webkit-scrollbar { width:6px; }
   ::-webkit-scrollbar-track { background:var(--parchment-mid); }
   ::-webkit-scrollbar-thumb { background:var(--terracotta-dark); }
+  /* DOWNLOAD BUTTONS */
+  .download-buttons {
+    display: flex; gap: 16px; justify-content: center;
+    margin-top: 40px; flex-wrap: wrap;
+  }
+  .dl-btn {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 24px;
+    border: 2px solid var(--terracotta);
+    text-decoration: none;
+    transition: all 0.2s;
+    min-width: 260px;
+  }
+  .dl-btn:hover {
+    background: rgba(176,82,20,0.2);
+    border-color: var(--terracotta-light);
+    transform: translateY(-2px);
+  }
+  .dl-linux { background: rgba(176,82,20,0.08); }
+  .dl-windows { background: rgba(100,60,10,0.08); }
+  .dl-icon {
+    font-size: 28px; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .dl-info { display: flex; flex-direction: column; text-align: left; }
+  .dl-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: var(--terracotta-light);
+    letter-spacing: 2px; margin-bottom: 4px;
+  }
+  .dl-os {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px; color: var(--gold);
+    letter-spacing: 1px; margin-bottom: 4px;
+  }
+  .dl-file {
+    font-size: 12px; color: var(--text-dim);
+    font-style: normal;
+  }
+  /* AGORA IMAGE */
+  .agora-img {
+    width: 100%; margin: 28px 0;
+    border: 2px solid var(--terracotta-dark);
+    display: block;
+  }
 </style>
 </head>
 <body>
@@ -152,6 +197,7 @@
 <div class="hero" id="story">
   <div class="hero-title">POLIS</div>
   <div class="hero-subtitle">BETA 0.1 &nbsp;·&nbsp; LINUX &amp; WINDOWS</div>
+  <img src="agora3.png" alt="Agora" class="agora-img">
   <div class="hero-story">
     <div class="pl">
       <p>Dawno temu, gdy bogowie jeszcze chodzili po ziemi i słuchali modlitw śmiertelnych, cztery wielkie miasta rywalizowały o chwałę Hellady — Sparta, Teby, Ateny i Korynt.</p>
@@ -167,6 +213,25 @@
     </div>
   </div>
   <div class="slogan">SIC MUNDUS CREATUS EST</div>
+
+  <div class="download-buttons">
+    <a class="dl-btn dl-linux" href="https://github.com/johnythunder/polis/raw/main/polis-beta-0.1-linux.tar.gz">
+      <span class="dl-icon">⬇</span>
+      <span class="dl-info">
+        <span class="dl-label">DOWNLOAD</span>
+        <span class="dl-os">LINUX</span>
+        <span class="dl-file">polis-beta-0.1-linux.tar.gz</span>
+      </span>
+    </a>
+    <a class="dl-btn dl-windows" href="https://github.com/johnythunder/polis/raw/main/polis-beta-0.1-windows.zip">
+      <span class="dl-icon">⬇</span>
+      <span class="dl-info">
+        <span class="dl-label">DOWNLOAD</span>
+        <span class="dl-os">WINDOWS 7/10/11</span>
+        <span class="dl-file">polis-beta-0.1-windows.zip</span>
+      </span>
+    </a>
+  </div>
 </div>
 
 <!-- INSTALL -->
