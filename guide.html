@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POLIS — Przewodnik / Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --terracotta: #b05214;
+    --terracotta-dark: #6b2e08;
+    --terracotta-light: #d4742a;
+    --gold: #c8a832;
+    --gold-dim: #7a6018;
+    --parchment: #1a0a02;
+    --parchment-mid: #120600;
+    --text: #d4c090;
+    --text-dim: #8a7a50;
+    --text-bright: #e8d898;
+    --nav-h: 52px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--parchment);
+    color: var(--text);
+    font-family: 'IM Fell English', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+  nav {
+    position: fixed; top:0; left:0; right:0;
+    z-index: 100;
+    background: var(--parchment-mid);
+    border-bottom: 3px solid var(--terracotta);
+    height: var(--nav-h);
+    display: flex; align-items: center;
+    overflow-x: auto; overflow-y: hidden;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display:none; }
+  .nav-brand {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px; color: var(--gold);
+    padding: 0 16px 0 20px; white-space: nowrap;
+    border-right: 2px solid var(--terracotta-dark);
+    line-height: var(--nav-h);
+    letter-spacing: 2px; flex-shrink:0;
+  }
+  .nav-links {
+    display:flex; align-items:center;
+    height:100%; padding:0 8px; gap:2px; flex:1;
+  }
+  nav a {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px; color: var(--text-dim);
+    text-decoration: none; padding: 5px 8px;
+    border: 1px solid transparent;
+    white-space: nowrap; letter-spacing:1px;
+    transition: all 0.15s; line-height:1.4;
+  }
+  nav a:hover { color: var(--gold); border-color: var(--terracotta); background: rgba(176,82,20,0.15); }
+  .lang-switch { margin-left:auto; display:flex; align-items:center; padding-right:16px; flex-shrink:0; gap:4px; }
+  .lang-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; padding: 5px 10px;
+    border: 1px solid var(--terracotta-dark);
+    background: transparent; color: var(--text-dim);
+    cursor: pointer; letter-spacing: 1px; transition: all 0.15s;
+  }
+  .lang-btn.active { background: var(--terracotta); color: var(--parchment-mid); border-color: var(--terracotta); }
+  .lang-btn:hover:not(.active) { border-color: var(--terracotta); color: var(--gold); }
+  .pl { display:block; } .en { display:none; }
+  body.lang-en .pl { display:none; } body.lang-en .en { display:block; }
+  main { margin-top:var(--nav-h); max-width:860px; margin-left:auto; margin-right:auto; padding:0 32px 80px; }
+  .hero { text-align:center; padding:60px 0 48px; border-bottom:2px solid var(--terracotta-dark); }
+  .hero-title { font-family:'Press Start 2P',monospace; font-size:42px; color:var(--gold); letter-spacing:8px; margin-bottom:12px; text-shadow:0 0 40px rgba(200,168,50,0.3); }
+  .hero-subtitle { font-family:'Press Start 2P',monospace; font-size:8px; color:var(--terracotta-light); letter-spacing:4px; margin-bottom:36px; }
+  .hero-story { font-style:italic; font-size:18px; line-height:2; color:var(--text); max-width:620px; margin:0 auto 24px; }
+  .hero-story p { margin-bottom:16px; }
+  .slogan { font-family:'Press Start 2P',monospace; font-size:9px; color:var(--terracotta-light); letter-spacing:3px; margin-top:32px; opacity:0.8; }
+  section { padding:56px 0 48px; border-bottom:1px solid var(--terracotta-dark); }
+  section:last-child { border-bottom:none; }
+  .section-title { font-family:'Press Start 2P',monospace; font-size:13px; color:var(--gold); letter-spacing:3px; margin-bottom:32px; padding-bottom:12px; border-bottom:2px solid var(--terracotta); display:flex; align-items:center; gap:12px; }
+  .section-title::before { content:''; display:inline-block; width:8px; height:8px; background:var(--terracotta); flex-shrink:0; }
+  h3 { font-family:'Press Start 2P',monospace; font-size:8px; color:var(--terracotta-light); letter-spacing:2px; margin:32px 0 14px; }
+  p { margin-bottom:14px; color:var(--text); }
+  strong { color:var(--text-bright); }
+  .screenshot { margin:24px 0; border:2px solid var(--terracotta-dark); background:#0a0402; }
+  .screenshot img { width:100%; display:block; image-rendering:pixelated; }
+  .screenshot-caption { font-family:'Press Start 2P',monospace; font-size:7px; color:var(--gold-dim); padding:8px 12px; background:var(--parchment-mid); border-top:1px solid var(--terracotta-dark); letter-spacing:1px; }
+  .screenshot-pair { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:24px 0; }
+  .highlight { border-left:3px solid var(--terracotta); padding:14px 18px; background:rgba(176,82,20,0.08); margin:18px 0; font-style:italic; }
+  /* OS TABS */
+  .os-tabs { display:flex; gap:4px; margin-bottom:0; }
+  .os-tab { font-family:'Press Start 2P',monospace; font-size:7px; padding:8px 16px; border:1px solid var(--terracotta-dark); background:var(--parchment-mid); color:var(--text-dim); cursor:pointer; letter-spacing:1px; border-bottom:none; }
+  .os-tab.active { background:var(--terracotta); color:var(--parchment-mid); border-color:var(--terracotta); }
+  .os-panel { display:none; border:1px solid var(--terracotta-dark); padding:20px; background:rgba(176,82,20,0.04); }
+  .os-panel.active { display:block; }
+  /* INSTALL */
+  .install-steps { counter-reset:step; list-style:none; margin:20px 0; }
+  .install-steps li { counter-increment:step; padding:12px 16px 12px 48px; margin-bottom:8px; background:var(--parchment-mid); border:1px solid var(--terracotta-dark); position:relative; color:var(--text); }
+  .install-steps li::before { content:counter(step); font-family:'Press Start 2P',monospace; font-size:8px; color:var(--terracotta-light); position:absolute; left:16px; top:50%; transform:translateY(-50%); }
+  code { font-family:'Press Start 2P',monospace; font-size:8px; color:var(--gold); background:rgba(0,0,0,0.4); padding:2px 6px; border:1px solid var(--terracotta-dark); letter-spacing:1px; }
+  /* CONTROLS */
+  .controls-grid { display:grid; grid-template-columns:auto 1fr; gap:2px; margin:20px 0; }
+  .ctrl-key { font-family:'Press Start 2P',monospace; font-size:7px; color:var(--gold); background:var(--parchment-mid); border:1px solid var(--terracotta); padding:8px 12px; white-space:nowrap; }
+  .ctrl-desc { font-size:15px; color:var(--text); background:rgba(176,82,20,0.05); border:1px solid var(--terracotta-dark); padding:8px 14px; display:flex; align-items:center; }
+  /* MODES */
+  .mode-block { border:1px solid var(--terracotta-dark); margin:16px 0; overflow:hidden; }
+  .mode-header { font-family:'Press Start 2P',monospace; font-size:8px; color:var(--parchment); background:var(--terracotta); padding:8px 14px; letter-spacing:2px; }
+  .mode-body { padding:14px 16px; background:rgba(176,82,20,0.05); font-size:15px; }
+  .mode-body p { margin-bottom:10px; }
+  .mode-body p:last-child { margin-bottom:0; }
+  /* MARKET */
+  .market-formula { font-family:'Press Start 2P',monospace; font-size:8px; color:var(--gold); text-align:center; padding:20px; background:var(--parchment-mid); border:2px solid var(--terracotta); margin:20px 0; line-height:2.8; letter-spacing:1px; }
+  /* CONTACT */
+  .contact-box { border:2px solid var(--terracotta); padding:20px 24px; background:rgba(176,82,20,0.06); margin:24px 0; }
+  .contact-box .email { font-family:'Press Start 2P',monospace; font-size:9px; color:var(--gold); letter-spacing:1px; margin-top:10px; display:block; }
+  footer { text-align:center; padding:40px 20px; border-top:2px solid var(--terracotta-dark); margin-top:40px; }
+  footer .slogan { font-family:'Press Start 2P',monospace; font-size:10px; color:var(--terracotta-light); letter-spacing:4px; }
+  footer .version { font-size:13px; color:var(--text-dim); margin-top:12px; }
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:var(--parchment-mid); }
+  ::-webkit-scrollbar-thumb { background:var(--terracotta-dark); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">POLIS</div>
+  <div class="nav-links">
+    <a href="#story"><span class="pl">HISTORIA</span><span class="en">STORY</span></a>
+    <a href="#install"><span class="pl">INSTALACJA</span><span class="en">INSTALL</span></a>
+    <a href="#setup"><span class="pl">KONFIGURACJA</span><span class="en">SETUP</span></a>
+    <a href="#gameplay"><span class="pl">ROZGRYWKA</span><span class="en">GAMEPLAY</span></a>
+    <a href="#economy"><span class="pl">EKONOMIA</span><span class="en">ECONOMY</span></a>
+    <a href="#save-audio"><span class="pl">ZAPIS I AUDIO</span><span class="en">SAVE &amp; AUDIO</span></a>
+    <a href="#endgame"><span class="pl">KONIEC GRY</span><span class="en">ENDGAME</span></a>
+    <a href="#feedback"><span class="pl">KONTAKT</span><span class="en">CONTACT</span></a>
+  </div>
+  <div class="lang-switch">
+    <button class="lang-btn active" onclick="setLang('pl')" id="btn-pl">PL</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO / STORY -->
+<div class="hero" id="story">
+  <div class="hero-title">POLIS</div>
+  <div class="hero-subtitle">BETA 0.1 &nbsp;·&nbsp; LINUX &amp; WINDOWS</div>
+  <div class="hero-story">
+    <div class="pl">
+      <p>Dawno temu, gdy bogowie jeszcze chodzili po ziemi i słuchali modlitw śmiertelnych, cztery wielkie miasta rywalizowały o chwałę Hellady — Sparta, Teby, Ateny i Korynt.</p>
+      <p>Jesteś archontem swojego polis. Wybierz boga-patrona — jego imię będzie towarzyszyć ci przez całą grę.</p>
+      <p>Agora otacza serce miasta — to tu schodzą się drogi, rodzą się połączenia, rośnie siła polis. Wytyczaj szlaki. Wznoś gospodarstwa. Otwieraj rynki. Każde połączenie dodaje siły twojemu polis — każdy rynek mnoży ją.</p>
+      <p>Bogowie patrzą. Hellada czeka.</p>
+    </div>
+    <div class="en">
+      <p>Long ago, when gods still walked the earth and listened to mortal prayers, four great cities competed for the glory of Hellas — Sparta, Thebes, Athens, and Corinth.</p>
+      <p>You are the archon of your polis. Choose your patron god — their name will accompany you throughout the game.</p>
+      <p>The agora surrounds the heart of the city — here roads converge, connections are born, and the strength of the polis grows. Lay paths. Raise households. Open markets. Every connection adds power to your polis — every market multiplies it.</p>
+      <p>The gods are watching. Hellas awaits.</p>
+    </div>
+  </div>
+  <div class="slogan">SIC MUNDUS CREATUS EST</div>
+</div>
+
+<!-- INSTALL -->
+<section id="install">
+  <h2 class="section-title">
+    <span class="pl">INSTALACJA</span><span class="en">INSTALLATION</span>
+  </h2>
+
+  <div class="os-tabs">
+    <div class="os-tab active" onclick="switchOS(this,'linux')">LINUX</div>
+    <div class="os-tab" onclick="switchOS(this,'windows')">WINDOWS</div>
+  </div>
+
+  <div class="os-panel active" id="panel-linux">
+    <div class="pl">
+      <p>Pobierz <code>polis-beta-0.1-linux.tar.gz</code> i wykonaj poniższe kroki w terminalu:</p>
+      <ol class="install-steps">
+        <li>Otwórz terminal w folderze z pobranym plikiem</li>
+        <li>Rozpakuj archiwum:<br><code>tar -xzf polis-beta-0.1-linux.tar.gz</code></li>
+        <li>Wejdź do folderu:<br><code>cd polis-beta-0.1</code></li>
+        <li>Nadaj uprawnienia (tylko pierwszy raz):<br><code>chmod +x run.sh polis</code></li>
+        <li>Uruchom grę:<br><code>./run.sh</code></li>
+      </ol>
+    </div>
+    <div class="en">
+      <p>Download <code>polis-beta-0.1-linux.tar.gz</code> and follow these steps in terminal:</p>
+      <ol class="install-steps">
+        <li>Open terminal in the folder where you downloaded the file</li>
+        <li>Extract the archive:<br><code>tar -xzf polis-beta-0.1-linux.tar.gz</code></li>
+        <li>Enter the folder:<br><code>cd polis-beta-0.1</code></li>
+        <li>Make executable (first time only):<br><code>chmod +x run.sh polis</code></li>
+        <li>Run the game:<br><code>./run.sh</code></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="os-panel" id="panel-windows">
+    <div class="pl">
+      <p>Pobierz <code>polis-beta-0.1-windows.zip</code> i wykonaj poniższe kroki:</p>
+      <ol class="install-steps">
+        <li>Kliknij prawym przyciskiem na plik .zip i wybierz "Wyodrębnij wszystko" / "Extract All"</li>
+        <li>Otwórz wypakowany folder <code>polis-beta-0.1-windows</code></li>
+        <li>Kliknij dwukrotnie <code>polis.exe</code></li>
+        <li>Jeśli Windows wyświetli ostrzeżenie "nieznany wydawca" — kliknij "Więcej informacji" → "Uruchom mimo to"</li>
+      </ol>
+      <div class="highlight">Plik <code>SDL2.dll</code> musi znajdować się w tym samym folderze co <code>polis.exe</code> — jest już dołączony do archiwum.</div>
+    </div>
+    <div class="en">
+      <p>Download <code>polis-beta-0.1-windows.zip</code> and follow these steps:</p>
+      <ol class="install-steps">
+        <li>Right-click the .zip file and select "Extract All"</li>
+        <li>Open the extracted folder <code>polis-beta-0.1-windows</code></li>
+        <li>Double-click <code>polis.exe</code></li>
+        <li>If Windows shows "unknown publisher" warning — click "More info" → "Run anyway"</li>
+      </ol>
+      <div class="highlight"><code>SDL2.dll</code> must be in the same folder as <code>polis.exe</code> — it is already included in the archive.</div>
+    </div>
+  </div>
+
+  <div class="highlight" style="margin-top:20px;">
+    <span class="pl">Jeśli gra się zawiesi, w folderze pojawi się plik <code>polis_log_*.txt</code>. Prześlij go na adres podany w sekcji Kontakt wraz z opisem co się stało.</span>
+    <span class="en">If the game crashes, a file named <code>polis_log_*.txt</code> will appear in the game folder. Send it to the address in the Contact section along with a description of what happened.</span>
+  </div>
+</section>
+
+<!-- SETUP -->
+<section id="setup">
+  <h2 class="section-title"><span class="pl">KONFIGURACJA</span><span class="en">SETUP</span></h2>
+
+  <h3><span class="pl">MENU GŁÓWNE</span><span class="en">MAIN MENU</span></h3>
+  <div class="screenshot"><img src="001.png" alt="Menu główne"><div class="screenshot-caption">Menu główne / Main menu</div></div>
+  <p class="pl">Zacznij od <code>NEW GAME</code>. LOAD i SAVE stają się aktywne gdy istnieje zapisana gra.</p>
+  <p class="en">Start with <code>NEW GAME</code>. LOAD and SAVE become active once a game exists.</p>
+
+  <h3><span class="pl">ROZMIAR MAPY</span><span class="en">MAP SIZE</span></h3>
+  <div class="screenshot"><img src="002.png" alt="Rozmiar mapy"><div class="screenshot-caption">Wybór rozmiaru mapy / Map size selection</div></div>
+  <p class="pl">SMALL 32×32 zalecane dla pierwszej gry. LARGE 64×64 oferuje dłuższą i bardziej strategiczną rozgrywkę.</p>
+  <p class="en">SMALL 32×32 recommended for your first game. LARGE 64×64 offers a longer, more strategic experience.</p>
+
+  <h3><span class="pl">TRYB GRACZY</span><span class="en">PLAYERS</span></h3>
+  <div class="screenshot"><img src="003.png" alt="Tryb graczy"><div class="screenshot-caption">Wybór trybu / Player mode</div></div>
+  <p class="pl">1 HUMAN VS 3 AI — gra solo. 2 HUMANS VS 2 AI — dwóch graczy na jednej klawiaturze, naprzemiennie.</p>
+  <p class="en">1 HUMAN VS 3 AI — solo play. 2 HUMANS VS 2 AI — two players on one keyboard, alternating turns.</p>
+
+  <h3><span class="pl">WYBÓR POLIS</span><span class="en">CHOOSE YOUR POLIS</span></h3>
+  <div class="screenshot"><img src="004.png" alt="Wybór polis"><div class="screenshot-caption">Wybór polis / Polis selection</div></div>
+  <p class="pl">Cztery polis, każde z własnym kolorem: Sparta (czerwony), Teby (zielony), Ateny (niebieski), Korynt (żółty).</p>
+  <p class="en">Four poleis: Sparta (red), Thebes (green), Athens (blue), Corinth (yellow).</p>
+
+  <h3><span class="pl">WYBÓR BOGA-PATRONA</span><span class="en">CHOOSE YOUR PATRON GOD</span></h3>
+  <div class="screenshot"><img src="005.png" alt="Wybór boga"><div class="screenshot-caption">Wybór boga-patrona / Patron god selection</div></div>
+  <p class="pl">Bóg-patron towarzyszy ci przez całą grę. Przewiń w dół po więcej opcji.</p>
+  <p class="en">Your patron god accompanies you throughout the game. Scroll down for more options.</p>
+
+  <h3><span class="pl">UMIESZCZENIE MIASTA</span><span class="en">PLACE YOUR CITY</span></h3>
+  <div class="screenshot"><img src="006.png" alt="Umieszczenie miasta"><div class="screenshot-caption">Umieszczenie miasta / City placement</div></div>
+  <p class="pl">Przesuń kursor strzałkami i naciśnij ENTER. Pozycja startowa wyznacza twoje pierwsze terytorium.</p>
+  <p class="en">Move cursor with ARROWS and press ENTER. Your starting position determines initial territory.</p>
+</section>
+
+<!-- GAMEPLAY -->
+<section id="gameplay">
+  <h2 class="section-title"><span class="pl">ROZGRYWKA</span><span class="en">GAMEPLAY</span></h2>
+
+  <h3><span class="pl">MAPA — DIAGRAM WORONOJA</span><span class="en">THE MAP — VORONOI DIAGRAM</span></h3>
+  <div class="screenshot"><img src="007.png" alt="Mapa Woronoja"><div class="screenshot-caption">Mapa Woronoja — terytorium / Voronoi map — territory</div></div>
+  <div class="pl">
+    <p>Mapa to <strong>diagram Woronoja</strong> — każda komórka należy do najbliższego miasta. Im więcej POW ma twoje polis, tym większe terytorium.</p>
+    <div class="highlight"><strong>Centrum miasta</strong> leży na styku czterech komórek.<br><br>Wokół niego widoczna jest cienka ramka — <strong>agora</strong>. To strefa będąca centrum sieci twojego polis. Gospodarstwa i drogi muszą być połączone z agorą żeby być aktywne.</div>
+  </div>
+  <div class="en">
+    <p>The map is a <strong>Voronoi diagram</strong> — every cell belongs to the nearest city. The more POW your polis has, the larger your territory.</p>
+    <div class="highlight">The <strong>city center</strong> sits at the intersection of four cells.<br><br>Around it, a thin frame marks the <strong>agora</strong> — the central zone of your polis network. Households and roads must connect back to the agora to be active.</div>
+  </div>
+
+  <h3><span class="pl">STEROWANIE</span><span class="en">CONTROLS</span></h3>
+  <div class="controls-grid">
+    <div class="ctrl-key">ARROWS</div><div class="ctrl-desc"><span class="pl">Ruch kursora</span><span class="en">Move cursor</span></div>
+    <div class="ctrl-key">ENTER</div><div class="ctrl-desc"><span class="pl">Wykonaj akcję</span><span class="en">Perform action</span></div>
+    <div class="ctrl-key">CTRL+UP</div><div class="ctrl-desc"><span class="pl">Zmień tryb — MINE → RADAR → BUILD → ROAD</span><span class="en">Cycle mode — MINE → RADAR → BUILD → ROAD</span></div>
+    <div class="ctrl-key">TAB</div><div class="ctrl-desc"><span class="pl">Pokaż sieć połączeń</span><span class="en">Show connected network</span></div>
+    <div class="ctrl-key">F1</div><div class="ctrl-desc"><span class="pl">Szybka pomoc</span><span class="en">Quick guide</span></div>
+    <div class="ctrl-key">ESC</div><div class="ctrl-desc"><span class="pl">Menu główne</span><span class="en">Main menu</span></div>
+  </div>
+
+  <h3><span class="pl">TRYB: RADAR</span><span class="en">MODE: RADAR</span></h3>
+  <div class="screenshot"><img src="008.png" alt="Tryb RADAR"><div class="screenshot-caption">Tryb RADAR / RADAR mode</div></div>
+  <p class="pl">Przełączaj tryby przez <code>CTRL+UP</code>. W trybie RADAR naciśnij ENTER aby zeskanować obszar wokół kursora — ukryte zasoby zaświecą się na chwilę. Używaj radaru zanim zaczniesz budować.</p>
+  <p class="en">Switch modes with <code>CTRL+UP</code>. In RADAR mode, press ENTER to scan the area — hidden resources glow briefly. Use radar before building.</p>
+
+  <h3><span class="pl">TRYB: MINE — EKSPLORACJA TERENU</span><span class="en">MODE: MINE — EXPLORING THE TERRAIN</span></h3>
+  <div class="screenshot"><img src="009.png" alt="Tryb MINE"><div class="screenshot-caption">Tryb MINE — odkrycie zasobu / MINE mode — resource found</div></div>
+  <div class="pl">
+    <p>Pod powierzchnią mapy kryją się zasoby — ziemie, kamieniołomy, jeziora — ukryte w różnych kształtach. W trybie MINE przesuń kursor na ciemną nieznaną komórkę i naciśnij ENTER.</p>
+    <div class="mode-block">
+      <div class="mode-header">WYNIKI RUCHU MINE</div>
+      <div class="mode-body">
+        <p><strong>Trafienie</strong> — komórka zasobu zmienia kolor na kolor twojego polis. +2 POW. Dostajesz dodatkowy ruch i możesz kontynuować eksplorację tego samego zasobu.</p>
+        <p><strong>Pudło</strong> — komórka jest pusta i otwiera się. Tura przechodzi do następnego gracza.</p>
+        <p><strong>Otwarta komórka</strong> — komórka już była odkryta. Nic się nie dzieje, tura NIE przechodzi.</p>
+      </div>
+    </div>
+  </div>
+  <div class="en">
+    <p>Beneath the map surface lie hidden resources — lands, quarries, lakes — concealed in various shapes. In MINE mode, move cursor to a dark unknown cell and press ENTER.</p>
+    <div class="mode-block">
+      <div class="mode-header">MINE RESULTS</div>
+      <div class="mode-body">
+        <p><strong>Hit</strong> — the cell takes the color of your polis. +2 POW. You get a bonus turn and can keep exploring the same resource.</p>
+        <p><strong>Miss</strong> — the cell is empty and opens up. Turn passes to the next player.</p>
+        <p><strong>Open cell</strong> — already revealed. Nothing happens, turn does NOT pass.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3><span class="pl">ODKRYCIE ZASOBU</span><span class="en">RESOURCE REVEALED</span></h3>
+  <div class="screenshot"><img src="010.png" alt="Zasób odkryty"><div class="screenshot-caption">Zasób w pełni odkryty / Resource fully revealed</div></div>
+  <p class="pl">Gdy zbadasz wszystkie komórki ukrytego zasobu, zostaje on w pełni odkryty. Okoliczne komórki otwierają się — teren gotowy pod budowę gospodarstw.</p>
+  <p class="en">When you have explored all cells of a hidden resource, it is fully revealed. The surrounding cells open up — terrain ready for building households.</p>
+
+  <h3><span class="pl">TRYB: BUILD — BUDOWA GOSPODARSTW</span><span class="en">MODE: BUILD — PLACING HOUSEHOLDS</span></h3>
+  <div class="screenshot"><img src="011.png" alt="Tryb BUILD"><div class="screenshot-caption">Tryb BUILD / Build mode</div></div>
+  <div class="pl">
+    <p>Przełącz na tryb BUILD. Możesz budować tylko na otwartych komórkach sąsiadujących z odkrytym zasobem. Każde <strong>podłączone gospodarstwо</strong> generuje <strong>+1 POW na rundę</strong>.</p>
+    <div class="highlight">Gospodarstwо niepodłączone do agory nic nie produkuje. Połączenie jest wszystkim.</div>
+  </div>
+  <div class="en">
+    <p>Switch to BUILD mode. You can only build on open cells adjacent to a revealed resource. Each <strong>connected household</strong> generates <strong>+1 POW per round</strong>.</p>
+    <div class="highlight">A household not connected to the agora produces nothing. Connection is everything.</div>
+  </div>
+
+  <h3><span class="pl">SIEĆ POŁĄCZEŃ (TAB)</span><span class="en">VIEWING THE NETWORK (TAB)</span></h3>
+  <div class="screenshot-pair">
+    <div class="screenshot"><img src="012.png" alt="Sieć"><div class="screenshot-caption">TAB — sieć połączeń / network view</div></div>
+    <div class="screenshot"><img src="013.png" alt="Agora"><div class="screenshot-caption">Szczegół agory / Agora detail</div></div>
+  </div>
+  <p class="pl">Naciśnij <code>TAB</code> aby włączyć widok sieci. Podłączone gospodarstwa i drogi są podświetlone. Użyj tego widoku aby znaleźć odizolowane gospodarstwa wymagające drogi.</p>
+  <p class="en">Press <code>TAB</code> to toggle the network overlay. Connected households and roads are highlighted. Use this to identify isolated households that need a road.</p>
+
+  <h3><span class="pl">TRYB: ROAD — BUDOWA DRÓG</span><span class="en">MODE: ROAD — BUILDING ROADS</span></h3>
+  <div class="screenshot-pair">
+    <div class="screenshot"><img src="013.png" alt="Przed drogą"><div class="screenshot-caption"><span class="pl">Przed budową drogi</span><span class="en">Before road</span></div></div>
+    <div class="screenshot"><img src="014.png" alt="Po drodze"><div class="screenshot-caption"><span class="pl">Po budowie — POW rośnie</span><span class="en">After road — POW jumps</span></div></div>
+  </div>
+  <div class="pl">
+    <p>Drogi łączą odizolowane gospodarstwa z siecią agory. Zauważ wartości POW w panelu — po podłączeniu przez drogę widać wyraźny wzrost siły.</p>
+    <div class="highlight">Gospodarstwa sąsiadujące z podłączonymi gospodarstwami również stają się podłączone — sieć rozszerza się jak korzenie.</div>
+  </div>
+  <div class="en">
+    <p>Roads connect isolated households to the agora network. Notice the POW values — after connecting via road, power increases sharply.</p>
+    <div class="highlight">Households adjacent to connected households also become connected — the network spreads like roots.</div>
+  </div>
+</section>
+
+<!-- ECONOMY -->
+<section id="economy">
+  <h2 class="section-title"><span class="pl">EKONOMIA</span><span class="en">ECONOMY</span></h2>
+
+  <h3><span class="pl">DOCHÓD NA RUNDĘ</span><span class="en">INCOME PER ROUND</span></h3>
+  <p class="pl">Każde podłączone gospodarstwо generuje <strong>+1 POW na rundę</strong>. Niepodłączone — nic.</p>
+  <p class="en">Every connected household generates <strong>+1 POW per round</strong>. Disconnected ones produce nothing.</p>
+
+  <h3><span class="pl">INFLACJA</span><span class="en">INFLATION</span></h3>
+  <p class="pl">Co 10 rund wszystkie polis tracą <strong>10% swojego POW</strong>. Z silną siecią twój dochód przewyższa inflację.</p>
+  <p class="en">Every 10 rounds, all poleis lose <strong>10% of their POW</strong>. With a strong network, your income outpaces inflation.</p>
+
+  <h3><span class="pl">RYNEK — KLUCZ DO WZROSTU</span><span class="en">MARKET — THE KEY TO GROWTH</span></h3>
+  <p class="pl">Co 100 podłączonych gospodarstw, najbliższe miastu staje się <strong>Rynkiem</strong>. Rynek ożywia wymianę i wzmacnia całą sieć — każdy <strong>podwaja dochód</strong> ze wszystkich gospodarstw:</p>
+  <p class="en">Every 100 connected households, the one nearest your city becomes a <strong>Market</strong>. Each market <strong>doubles all household income</strong>:</p>
+  <div class="market-formula">
+    1 RYNEK / MARKET &nbsp;=&nbsp; ×2<br>
+    2 RYNKI / MARKETS &nbsp;=&nbsp; ×4<br>
+    3 RYNKI / MARKETS &nbsp;=&nbsp; ×8<br>
+    4 RYNKI / MARKETS &nbsp;=&nbsp; ×16
+  </div>
+  <div class="highlight pl">Strategia: priorytetem jest podłączanie gospodarstw. Zwarta sieć blisko agory bije rozległy rozproszony sieć za każdym razem.</div>
+  <div class="highlight en">Strategy: prioritize connecting households. A tight cluster near the agora beats a sprawling disconnected network every time.</div>
+</section>
+
+<!-- SAVE & AUDIO -->
+<section id="save-audio">
+  <h2 class="section-title"><span class="pl">ZAPIS I AUDIO</span><span class="en">SAVE &amp; AUDIO</span></h2>
+
+  <h3><span class="pl">ZAPISYWANIE I WCZYTYWANIE</span><span class="en">SAVING AND LOADING</span></h3>
+  <div class="screenshot-pair">
+    <div class="screenshot"><img src="015.png" alt="Menu ESC"><div class="screenshot-caption">Menu ESC podczas gry / ESC menu in game</div></div>
+    <div class="screenshot"><img src="016.png" alt="Sloty zapisu"><div class="screenshot-caption">10 slotów zapisu / 10 save slots</div></div>
+  </div>
+  <p class="pl">Naciśnij <code>ESC</code> w dowolnym momencie gry. SAVE GAME zapisuje stan w jednym z 10 slotów. LOAD GAME przywraca poprzednią sesję.</p>
+  <p class="en">Press <code>ESC</code> at any time. SAVE GAME stores your state in one of 10 slots. LOAD GAME restores a previous session.</p>
+
+  <h3><span class="pl">USTAWIENIA AUDIO</span><span class="en">AUDIO SETTINGS</span></h3>
+  <div class="screenshot"><img src="017.png" alt="Audio"><div class="screenshot-caption">Ustawienia audio / Audio settings</div></div>
+  <div class="pl">
+    <p>Dostępne z menu głównego → AUDIO. Każda akcja generuje nutę muzyczną. Cztery polis grają w różnych oktawach, tworząc improwizację w miarę rozgrywki.</p>
+    <p>Instrumenty: <code>AULOS</code> (podwójny stroik) · <code>LYRE</code> (szarpana struna) · <code>SALPINX</code> (mosiężna trąba)</p>
+  </div>
+  <div class="en">
+    <p>Access from main menu → AUDIO. Each action produces a musical note. The four poleis play in different octaves, creating improvisation as the game unfolds.</p>
+    <p>Instruments: <code>AULOS</code> (double reed) · <code>LYRE</code> (plucked string) · <code>SALPINX</code> (brass trumpet)</p>
+  </div>
+</section>
+
+<!-- ENDGAME -->
+<section id="endgame">
+  <h2 class="section-title"><span class="pl">KONIEC GRY</span><span class="en">ENDGAME</span></h2>
+
+  <h3><span class="pl">PÓŹNA GRA</span><span class="en">LATE GAME</span></h3>
+  <div class="screenshot"><img src="018.png" alt="Późna gra"><div class="screenshot-caption"><span class="pl">Późna gra — gracz wciąż aktywny</span><span class="en">Late game — player still active</span></div></div>
+  <p class="pl">W późnej grze słabsze polis tracą terytorium gdy inflacja przewyższa dochód.</p>
+  <p class="en">In late game, weaker poleis lose territory as inflation outpaces their income.</p>
+
+  <h3>AUTO-SKIP (AUT)</h3>
+  <div class="screenshot"><img src="019.png" alt="AUT"><div class="screenshot-caption">AUT — automatyczne pomijanie / auto-skip</div></div>
+  <p class="pl">Gdy polis nie ma dostępnych akcji wchodzi w tryb <strong>automatycznego pomijania</strong>. Tura przechodzi sama. Jeśli pojawi się możliwy ruch — odzyskujesz kontrolę.</p>
+  <p class="en">When a polis has no available actions it enters <strong>auto-skip</strong> mode. The turn passes automatically. If a move becomes available you will regain control.</p>
+
+  <h3><span class="pl">ZAMROŻENIE — MIASTO STAJE SIĘ RUINĄ</span><span class="en">FREEZE — CITY BECOMES RUINS</span></h3>
+  <div class="screenshot"><img src="020.png" alt="FRZ"><div class="screenshot-caption">FRZ — miasto w ruinie / city becomes ruins</div></div>
+  <div class="pl">
+    <p>Gdy terytorium polis skurczy się do 4 komórek wokół miasta, zostaje ono <strong>zamrożone</strong>. Miasto staje się ruiną. Zamrożone polis nie wykonuje ruchów. Ostatnie aktywne polis trwa.</p>
+    <div class="highlight">Bogowie patrzą. Hellada czeka.<br><em>Sic mundus creatus est.</em></div>
+  </div>
+  <div class="en">
+    <p>When a polis's territory is reduced to 4 cells, it is <strong>frozen</strong>. The city becomes ruins. A frozen polis no longer acts. The last polis remaining active prevails.</p>
+    <div class="highlight">The gods are watching. Hellas awaits.<br><em>Sic mundus creatus est.</em></div>
+  </div>
+</section>
+
+<!-- FEEDBACK -->
+<section id="feedback">
+  <h2 class="section-title"><span class="pl">KONTAKT I FEEDBACK</span><span class="en">CONTACT &amp; FEEDBACK</span></h2>
+  <div class="pl">
+    <p>To jest wersja beta. Twoja opinia ma znaczenie — każdy raport pomaga ulepszyć grę. Napisz nam co myślisz, co nie działa. Jeśli gra się zawiesiła — prześlij plik <code>polis_log_*.txt</code> z folderu gry wraz z opisem co się stało.</p>
+    <div class="contact-box">
+      <span>Kontakt / feedback / raporty błędów:</span>
+      <span class="email">potapenko.iv@gmail.com</span>
+      <p style="margin-top:12px;font-size:14px;color:var(--text-dim);">Temat wiadomości: <code>[POLIS BETA]</code></p>
+    </div>
+  </div>
+  <div class="en">
+    <p>This is a beta release. Your feedback matters. Tell us what you think, what does not work. If the game crashed — send the file <code>polis_log_*.txt</code> from the game folder along with a description.</p>
+    <div class="contact-box">
+      <span>Contact / feedback / bug reports:</span>
+      <span class="email">potapenko.iv@gmail.com</span>
+      <p style="margin-top:12px;font-size:14px;color:var(--text-dim);">Subject: <code>[POLIS BETA]</code></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="slogan">SIC MUNDUS CREATUS EST</div>
+  <div class="version">POLIS Beta 0.1 · May 2026 · Linux &amp; Windows x86_64</div>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.body.className = lang === 'en' ? 'lang-en' : '';
+  document.getElementById('btn-pl').classList.toggle('active', lang === 'pl');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  localStorage.setItem('polis_lang', lang);
+}
+function switchOS(el, os) {
+  document.querySelectorAll('.os-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.os-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-' + os).classList.add('active');
+}
+(function() {
+  var saved = localStorage.getItem('polis_lang') || 'pl';
+  setLang(saved);
+})();
+</script>
+</body>
+</html>
